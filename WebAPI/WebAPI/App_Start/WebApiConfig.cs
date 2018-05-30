@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Web.Http.Cors;
 
 namespace WebAPI
 {
@@ -12,13 +13,19 @@ namespace WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            //config.EnableCors();
+            var cors = new EnableCorsAttribute("http://localhost:54291", "*", "*");
+            config.EnableCors(cors);
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
+
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            // New code
+            
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

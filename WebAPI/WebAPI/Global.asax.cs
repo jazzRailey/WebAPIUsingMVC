@@ -22,14 +22,22 @@ namespace WebAPI
 
         protected void Application_BeginRequest()
         {
-            string[] allowedOrigin = new string[] { "http://localhost:54291" };
-            var origin = HttpContext.Current.Request.Headers["Origin"];
-            if (origin != null && allowedOrigin.Contains(origin))
+            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
             {
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", origin);
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET,POST");
+                Response.Flush();
             }
         }
+
+        //protected void Application_BeginRequest()
+        //{
+        //    string[] allowedOrigin = new string[] { "http://localhost:54291" };
+        //    var origin = HttpContext.Current.Request.Headers["Origin"];
+        //    if (origin != null && allowedOrigin.Contains(origin))
+        //    {
+        //        HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", origin);
+        //        HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET,POST");
+        //    }
+        //}
 
 
     }
